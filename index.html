@@ -59,7 +59,6 @@ if (authorizationCode) {
       console.log('Access token:', accessToken);
       // Use the access token to make API requests
       localStorage.setItem("accesstoken", accessToken)
-      location = "https://www.google.com/"
     })
     .catch((error) => {
       console.error('Token exchange error:', error);
