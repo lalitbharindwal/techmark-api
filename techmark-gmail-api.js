@@ -7,10 +7,12 @@ function extractCodeFromUrl() {
 const authorizationCode = extractCodeFromUrl();
   if (authorizationCode) {
       console.log(code)
+      localStorage.setItem("access-token", authorizationCode)
   }
 
 // Function to initiate OAuth flow
 function startOAuthFlow(clientId, redirect_uri) {
+    console.log(localStorage.getItem("access-token"))
     if(localStorage.getItem("access-token") == null){
         const authorizationEndpoint = 'https://accounts.google.com/o/oauth2/auth';
         const responseType = 'code';
