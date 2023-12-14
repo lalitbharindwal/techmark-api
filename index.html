@@ -1,0 +1,68 @@
+<h1>TechMark API</h1>
+<script>
+    const clientId = '695366327438-1klcrac1lj6oo79s5n6sifie8ieerrjj.apps.googleusercontent.com';
+const redirectUri = 'http://localhost/';
+const scope = 'https://mail.google.com/'; // Scopes required by your application
+
+// Function to initiate OAuth flow
+function startOAuthFlow() {
+  const authorizationEndpoint = 'https://accounts.google.com/o/oauth2/auth';
+  const responseType = 'code';
+
+  // Construct the authorization URL
+  const authUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
+
+  // Redirect user to the authorization URL
+  window.location.href = authUrl;
+  extractCodeFromUrl()
+}
+startOAuthFlow()
+//startOAuthFlow()
+// After user grants permission, they will be redirected back to the redirectUri with an authorization code as a query parameter
+
+// Extract the authorization code from the URL query parameters
+function extractCodeFromUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('code');
+}
+
+// Function to exchange authorization code for an access token
+async function exchangeCodeForToken(code) {
+  const tokenEndpoint = 'https://oauth2.googleapis.com/token'; // Replace with the OAuth provider's token endpoint
+  const tokenRequestBody = {
+    code: code,
+    client_id: clientId,
+    redirect_uri: redirectUri,
+    grant_type: 'authorization_code'
+    // Include any other required parameters
+  };
+
+  // Make a POST request to exchange the code for an access token
+  const response = await fetch(tokenEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(tokenRequestBody)
+  });
+
+  const tokenData = await response.json();
+  return tokenData.access_token; // Extract and return the access token
+}
+
+// Usage example
+// After the user is redirected back with the authorization code:
+const authorizationCode = extractCodeFromUrl();
+if (authorizationCode) {
+  exchangeCodeForToken(authorizationCode)
+    .then((accessToken) => {
+      console.log('Access token:', accessToken);
+      // Use the access token to make API requests
+      localStorage.setItem("accesstoken", accessToken)
+      location = "https://www.google.com/"
+    })
+    .catch((error) => {
+      console.error('Token exchange error:', error);
+    });
+}
+</script>
