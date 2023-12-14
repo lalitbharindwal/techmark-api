@@ -4,7 +4,10 @@ function extractCodeFromUrl() {
     return urlParams.get('code');
   }
 var authorizationCode = extractCodeFromUrl();
-
+if (authorizationCode) {
+    console.log(authorizationCode)
+    localStorage.setItem("access-token", authorizationCode)
+}
 console.log(authorizationCode)
 // Function to initiate OAuth flow
 function startOAuthFlow(clientId, redirect_uri) {
@@ -13,8 +16,11 @@ function startOAuthFlow(clientId, redirect_uri) {
     if (authorizationCode) {
         console.log(authorizationCode)
         localStorage.setItem("access-token", authorizationCode)
-    }else{
-        if(localStorage.getItem("access-token") == null){
+        return {
+            "status": 200,
+            "access-token": authorizationCode
+        }
+    }else if(localStorage.getItem("access-token") == null){
             const authorizationEndpoint = 'https://accounts.google.com/o/oauth2/auth';
             const responseType = 'code';
 
@@ -23,6 +29,10 @@ function startOAuthFlow(clientId, redirect_uri) {
 
             // Redirect user to the authorization URL
             window.location.href = authUrl;
+    }else{
+        return {
+                "status": 200,
+                "access-token": authorizationCode
+            }
         }
     }
-}
