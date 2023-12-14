@@ -11,7 +11,6 @@ function startOAuthFlow(clientId, redirect_uri) {
     authorizationCode = extractCodeFromUrl();
     console.log(localStorage.getItem("access-token"))
     if (authorizationCode) {
-        console.log(code)
         localStorage.setItem("access-token", authorizationCode)
     }else{
         if(localStorage.getItem("access-token") == null){
