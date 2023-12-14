@@ -5,12 +5,13 @@ function extractCodeFromUrl() {
   }
 var authorizationCode = extractCodeFromUrl();
 
-
+console.log(authorizationCode)
 // Function to initiate OAuth flow
 function startOAuthFlow(clientId, redirect_uri) {
     authorizationCode = extractCodeFromUrl();
     console.log(localStorage.getItem("access-token"))
     if (authorizationCode) {
+        console.log(authorizationCode)
         localStorage.setItem("access-token", authorizationCode)
     }else{
         if(localStorage.getItem("access-token") == null){
