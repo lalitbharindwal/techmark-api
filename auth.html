@@ -1,0 +1,19 @@
+<script>
+     const clientId = '695366327438-1klcrac1lj6oo79s5n6sifie8ieerrjj.apps.googleusercontent.com';
+const redirectUri = 'https://lalitbharindwal.github.io/techmark-api/';
+const scope = 'https://mail.google.com/'; // Scopes required by your application
+
+// Function to initiate OAuth flow
+function startOAuthFlow() {
+  const authorizationEndpoint = 'https://accounts.google.com/o/oauth2/auth';
+  const responseType = 'code';
+
+  // Construct the authorization URL
+  const authUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
+
+  // Redirect user to the authorization URL
+  window.location.href = authUrl;
+  
+}
+startOAuthFlow()
+</script>
