@@ -1,53 +1,10 @@
 <h1>TechMark API</h1>
+
+<script src="techmark-gmail-api.js"></script>
 <script>
-   const clientId = '695366327438-1klcrac1lj6oo79s5n6sifie8ieerrjj.apps.googleusercontent.com';
-   const redirectUri = 'https://lalitbharindwal.github.io/techmark-api/';
-//startOAuthFlow()
-// After user grants permission, they will be redirected back to the redirectUri with an authorization code as a query parameter
+ const clientId = '695366327438-1klcrac1lj6oo79s5n6sifie8ieerrjj.apps.googleusercontent.com';
+const redirectUri = 'https://lalitbharindwal.github.io/techmark-api/';
+startOAuthFlow(clientId, redirectUri)
 
-// Extract the authorization code from the URL query parameters
-function extractCodeFromUrl() {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get('code');
-}
-
-// Function to exchange authorization code for an access token
-async function exchangeCodeForToken(code) {
-  const tokenEndpoint = 'https://oauth2.googleapis.com/token'; // Replace with the OAuth provider's token endpoint
-  const tokenRequestBody = {
-    code: code,
-    client_id: clientId,
-    redirect_uri: redirectUri,
-    grant_type: 'authorization_code'
-    // Include any other required parameters
-  };
-
-  // Make a POST request to exchange the code for an access token
-  const response = await fetch(tokenEndpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(tokenRequestBody)
-  });
-
-  const tokenData = await response.json();
-  return tokenData.access_token; // Extract and return the access token
-}
-
-// Usage example
-// After the user is redirected back with the authorization code:
-const authorizationCode = extractCodeFromUrl();
-if (authorizationCode) {
-  exchangeCodeForToken(authorizationCode)
-    .then((accessToken) => {
-      console.log('Access token:', accessToken);
-      // Use the access token to make API requests
-      sessionStorage.setItem("at", accessToken)
-      console.log(accessToken.token)
-    })
-    .catch((error) => {
-      console.error('Token exchange error:', error);
-    });
-}
 </script>
+
