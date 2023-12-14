@@ -3,7 +3,7 @@ function extractCodeFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('code');
   }
-const authorizationCode = extractCodeFromUrl();
+var authorizationCode = extractCodeFromUrl();
 
 
 // Function to initiate OAuth flow

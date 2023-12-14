@@ -1,10 +1,15 @@
 <h1>TechMark API</h1>
-
+<button onclick="auth()">auth</button>
 <script src="techmark-gmail-api.js"></script>
 <script>
  const clientId = '695366327438-1klcrac1lj6oo79s5n6sifie8ieerrjj.apps.googleusercontent.com';
 const redirectUri = 'https://lalitbharindwal.github.io/techmark-api/';
-startOAuthFlow(clientId, redirectUri)
 
+
+
+
+function auth(){
+    startOAuthFlow(clientId, redirectUri)
+}
 </script>
 
