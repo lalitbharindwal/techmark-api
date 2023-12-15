@@ -25,7 +25,7 @@ function startOAuthFlow(clientId, redirect_uri) {
 function authenticate_code(){
 
     // URL to fetch data from
-const apiUrl = 'https://mr6s4xnd46.execute-api.us-east-1.amazonaws.com/dev/';
+const apiUrl = 'https://mr6s4xnd46.execute-api.us-east-1.amazonaws.com/codeoauth/';
 
 // Using Fetch to make a GET request
 fetch(apiUrl)
