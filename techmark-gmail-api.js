@@ -27,7 +27,7 @@ function startOAuthFlow(clientId, clientSecret, redirect_uri) {
 }
 
 function encryptBearer(bearer) {
-    sessionStorage.setItem("bearer", btoa(unescape(encodeURIComponent(encryptedBearer))))
+    sessionStorage.setItem("bearer", btoa(unescape(encodeURIComponent(bearer))))
     console.log("sessionStorage.getItem('bearer')2: ", sessionStorage.getItem("bearer"))
   }
   
