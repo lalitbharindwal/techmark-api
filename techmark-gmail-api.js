@@ -14,6 +14,7 @@ function flow(event){
             startOAuthFlow(event["clientId"], event["clientSecret"], event["redirect_uri"])
         }
     }
+    console.log("sessionStorage.getItem('bearer')1: ", sessionStorage.getItem("bearer"))
 }
 
 // Function to initiate OAuth flow
@@ -27,21 +28,17 @@ function startOAuthFlow(clientId, clientSecret, redirect_uri) {
     window.location.href = authUrl;
 }
 
-function jsonToStringAndBack(data) {
-    // Check if the input is an object
-    if (typeof data === 'object') {
-        // Convert object to string
-        var jsonString = JSON.stringify(data);
-        return jsonString
+function encryptBearer(bearer) {
+    const encryptedBearer = JSON.stringify(bearer);
+    sessionStorage.setItem("bearer", btoa(unescape(encodeURIComponent(encryptedBearer))))
+    console.log("sessionStorage.getItem('bearer')2: ", sessionStorage.getItem("bearer"))
+  }
   
-    }else if (typeof data === 'string') {
-        // Convert string to JSON object
-        var jsonObjectFromString = JSON.parse(data);
-        return jsonObjectFromString
-    }else {
-        return null;
-    }
-}
+  // Function to convert base64 string to JSON object
+function decryptBearer(bearer) {
+    const decryptedBearer = decodeURIComponent(escape(atob(bearer)));
+    return JSON.parse(decryptedBearer);
+  }
 
 function authenticate_code(authCode, clientId, clientSecret, redirect_uri){
     let headers = new Headers();
@@ -58,9 +55,6 @@ function authenticate_code(authCode, clientId, clientSecret, redirect_uri){
         }).then((data)=>{
             return data.text();
         }).then((data2)=>{
-            console.log("data2: ", data2)
-            sessionStorage.setItem("bearer", JSON.stringify(data2))
-            console.log("sessionStorage.getItem('bearer'): ", sessionStorage.getItem("bearer"))
+            encryptBearer(data2)
     });
 }
-

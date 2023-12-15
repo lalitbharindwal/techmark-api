@@ -15,6 +15,7 @@ const event = {
 
 function auth(){
     flow(event)
+    decryptBearer(sessionStorage.getItem("bearer"))
 }
 </script>
 
