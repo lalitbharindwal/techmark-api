@@ -28,7 +28,6 @@ function startOAuthFlow(clientId, clientSecret, redirect_uri) {
 
 function encryptBearer(bearer) {
     sessionStorage.setItem("bearer", btoa(unescape(encodeURIComponent(bearer))))
-    console.log("sessionStorage.getItem('bearer')2: ", sessionStorage.getItem("bearer"))
   }
   
   // Function to convert base64 string to JSON object
@@ -51,10 +50,7 @@ function authenticate_code(authCode, clientId, clientSecret, redirect_uri){
         }).then((data)=>{
             return data.text();
         }).then((data2)=>{
-            encryptBearer(data2)
             const token_json = JSON.parse(data2)
-            console.log(token_json)
-            
-            console.log(JSON.parse(token_json["body"])["access_token"])
+            encryptBearer(JSON.parse(token_json["body"])["access_token"])
     });
 }
