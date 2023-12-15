@@ -21,3 +21,29 @@ function startOAuthFlow(clientId, redirect_uri) {
         window.location.href = authUrl;
     }
 }
+
+function authenticate_code(){
+
+    // URL to fetch data from
+const apiUrl = 'https://mr6s4xnd46.execute-api.us-east-1.amazonaws.com/dev/';
+
+// Using Fetch to make a GET request
+fetch(apiUrl)
+  .then(response => {
+    // Check if the request was successful (status code 200-299)
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    // Parse the JSON data returned by the server
+    return response.json();
+  })
+  .then(data => {
+    // Work with the data obtained from the server
+    console.log(data);
+  })
+  .catch(error => {
+    // Handle any errors that occurred during the fetch
+    console.error('Fetch error:', error);
+  });
+}
+authenticate_code()
