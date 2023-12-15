@@ -8,9 +8,8 @@ function flow(event){
     if(bearer == null){
         const authorizationCode = extractCodeFromUrl();
         if (authorizationCode) {
-            const bearer = authenticate_code(authorizationCode, event["clientId"], event["clientSecret"], event["redirect_uri"])
-            console.log("bearer", bearer)
-            sessionStorage.setItem("bearer", bearer)
+            authenticate_code(authorizationCode, event["clientId"], event["clientSecret"], event["redirect_uri"])
+            console.log(sessionStorage.getItem("bearer"))
         }else{
             startOAuthFlow(event["clientId"], event["clientSecret"], event["redirect_uri"])
         }
@@ -59,8 +58,9 @@ function authenticate_code(authCode, clientId, clientSecret, redirect_uri){
         }).then((data)=>{
             return data.text();
         }).then((data2)=>{
-            console.log(data2)
-            return data2
+            console.log("data2: ", data2)
+            sessionStorage.setItem("bearer", JSON.stringify(data2))
+            console.log("sessionStorage.getItem('bearer'): ", sessionStorage.getItem("bearer"))
     });
 }
 

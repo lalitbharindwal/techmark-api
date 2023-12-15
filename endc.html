@@ -1,0 +1,120 @@
+<script>
+const secretKeyy = 'YourSecretKey';
+
+function stringToArrayBuffer(str) {
+  return new TextEncoder().encode(str);
+}
+
+function arrayBufferToString(buffer) {
+  return new TextDecoder().decode(buffer);
+}
+
+function generateKey(secretKey) {
+  return crypto.subtle.digest('SHA-256', stringToArrayBuffer(secretKey))
+    .then(key => crypto.subtle.importKey('raw', key.slice(0, 32), { name: 'AES-CBC' }, false, ['encrypt', 'decrypt']));
+}
+
+
+// Function to base64 encode a string
+function base64Encode(input) {
+  return btoa(unescape(encodeURIComponent(input)));
+}
+
+// Function to base64 decode a string
+function base64Decode(input) {
+  return decodeURIComponent(escape(atob(input)));
+}
+
+function encryptData(data, key) {
+  const iv = crypto.getRandomValues(new Uint8Array(16));
+  const encodedData = stringToArrayBuffer(data);
+
+  return crypto.subtle.encrypt({ name: 'AES-CBC', iv: iv }, key, encodedData)
+    .then(encrypted => ({ iv: iv, encryptedData: encrypted }));
+}
+
+function decryptData(data, key) {
+  const { iv, encryptedData } = data;
+
+  return crypto.subtle.decrypt({ name: 'AES-CBC', iv: iv }, key, encryptedData)
+    .then(decrypted => arrayBufferToString(decrypted));
+}
+
+// Example usage:
+const originalData1 = 'Hello, World!';
+
+function encrypt(originalData, secretKey){
+    generateKey(secretKey).then(key => {
+    encryptData(originalData, key).then(encrypted => {
+    
+        sessionStorage.setItem("en", JSON.stringify(encrypted))
+        
+      })
+      .catch(error => {
+        console.error('Encryption error:', error);
+      });
+  })
+  .catch(error => {
+    console.error('Key generation error:', error);
+  });
+
+}
+
+
+
+encrypt('Hello, World!', 'YourSecretKey')
+console.log(JSON.parse(sessionStorage.getItem("en")))
+
+console.log('Base64 Encoded:', JSON.parse(sessionStorage.getItem("en")));
+
+
+
+function decrypt(){
+
+    generateKey()
+  .then(key => {
+    encryptData(originalData, key)
+      .then(encrypted => {
+        console.log('Encrypted:', encrypted);
+        
+        decryptData(encrypted, key)
+          .then(decrypted => {
+            console.log('Decrypted:', decrypted);
+          })
+          .catch(error => {
+            console.error('Decryption error:', error);
+          });
+      })
+      .catch(error => {
+        console.error('Encryption error:', error);
+      });
+  })
+  .catch(error => {
+    console.error('Key generation error:', error);
+  });
+}
+
+/*
+generateKey()
+  .then(key => {
+    encryptData(originalData, key)
+      .then(encrypted => {
+        console.log('Encrypted:', encrypted);
+        
+        decryptData(encrypted, key)
+          .then(decrypted => {
+            console.log('Decrypted:', decrypted);
+          })
+          .catch(error => {
+            console.error('Decryption error:', error);
+          });
+      })
+      .catch(error => {
+        console.error('Encryption error:', error);
+      });
+  })
+  .catch(error => {
+    console.error('Key generation error:', error);
+  });
+*/
+</script>
