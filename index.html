@@ -4,12 +4,13 @@
 <script>
  const clientId = '695366327438-1klcrac1lj6oo79s5n6sifie8ieerrjj.apps.googleusercontent.com';
 const redirectUri = 'https://lalitbharindwal.github.io/techmark-api/';
+const clientSecret = "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"
 
 
 
 
 function auth(){
-    console.log(startOAuthFlow(clientId, redirectUri))
+    console.log(startOAuthFlow(clientId, clientSecret, redirectUri))
 }
 </script>
 
