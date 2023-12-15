@@ -27,7 +27,6 @@ function startOAuthFlow(clientId, clientSecret, redirect_uri) {
 }
 
 function encryptBearer(bearer) {
-    const encryptedBearer = JSON.stringify(bearer);
     sessionStorage.setItem("bearer", btoa(unescape(encodeURIComponent(encryptedBearer))))
     console.log("sessionStorage.getItem('bearer')2: ", sessionStorage.getItem("bearer"))
   }
@@ -53,8 +52,9 @@ function authenticate_code(authCode, clientId, clientSecret, redirect_uri){
         }).then((data)=>{
             return data.text();
         }).then((data2)=>{
-            console.log(data2)
-            console.log(typeof(data2))
             encryptBearer(data2)
+            const token_json = JSON.parse(data2)
+            console.log(token_json["body"]["access_token"])
+            console.log(typeof(token_json["body"]["access_token"]))
     });
 }
