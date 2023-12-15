@@ -25,7 +25,7 @@ function startOAuthFlow(clientId, redirect_uri) {
 function authenticate_code(){
 
     let headers = new Headers();
-    headers.append('Origin','https://lalitbharindwal.github.io');
+    headers.append('Origin','https://lalitbharindwal.github.io/');
 fetch('https://mr6s4xnd46.execute-api.us-east-1.amazonaws.com/codeoauth/', {
     method: 'POST',
     headers: headers,
