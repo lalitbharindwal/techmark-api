@@ -9,12 +9,10 @@ function flow(event){
         const authorizationCode = extractCodeFromUrl();
         if (authorizationCode) {
             authenticate_code(authorizationCode, event["clientId"], event["clientSecret"], event["redirect_uri"])
-            console.log(sessionStorage.getItem("bearer"))
         }else{
             startOAuthFlow(event["clientId"], event["clientSecret"], event["redirect_uri"])
         }
     }
-    console.log("sessionStorage.getItem('bearer')1: ", sessionStorage.getItem("bearer"))
 }
 
 // Function to initiate OAuth flow
@@ -55,6 +53,8 @@ function authenticate_code(authCode, clientId, clientSecret, redirect_uri){
         }).then((data)=>{
             return data.text();
         }).then((data2)=>{
+            console.log(data2)
+            console.log(typeof(data2))
             encryptBearer(data2)
     });
 }

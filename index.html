@@ -1,5 +1,6 @@
 <h1>TechMark API</h1>
 <button onclick="auth()">auth</button>
+<button onclick="auth()">get token</button>
 <script src="techmark-gmail-api.js"></script>
 <script>
 const clientId = '695366327438-1klcrac1lj6oo79s5n6sifie8ieerrjj.apps.googleusercontent.com';
@@ -13,9 +14,8 @@ const event = {
 }
 
 
-function auth(){
+
     flow(event)
-    decryptBearer(sessionStorage.getItem("bearer"))
-}
+
 </script>
 
