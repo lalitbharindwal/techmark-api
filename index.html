@@ -17,7 +17,8 @@ const event = {
     flow(event)
 
     function auth(){
-        console.log(decryptBearer(sessionStorage.getItem("bearer")))
+        const token = decryptBearer(sessionStorage.getItem("bearer"))
+        console.log(token["body"]["access_token"])
     }
 
 
