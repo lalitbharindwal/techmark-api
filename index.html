@@ -18,6 +18,7 @@ const event = {
 
     function auth(){
         const token = decryptBearer(sessionStorage.getItem("bearer"))
+        console.log(token)
         console.log(token["body"]["access_token"])
     }
 

@@ -55,6 +55,8 @@ function authenticate_code(authCode, clientId, clientSecret, redirect_uri){
             encryptBearer(data2)
             const token_json = JSON.parse(data2)
             console.log(token_json)
+            console.log(token_json.body)
+            console.log(token_json["body"])
             console.log(token_json["body"]["access_token"])
             console.log(typeof(token_json["body"]["access_token"]))
     });
